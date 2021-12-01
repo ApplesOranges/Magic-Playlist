@@ -1,6 +1,4 @@
-from flask import Flask, request, redirect, jsonify
-from spotipy.oauth2 import SpotifyOAuth
-import spotipy.util as util
+from flask import Flask, request, jsonify
 import spotipy
 from prediction import genPlaylist
 
