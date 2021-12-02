@@ -42,7 +42,8 @@ def infoPlaylist(id):
                 "url": element["track"]["external_urls"]["spotify"],
                 "id":element["track"]["id"],
                 "name": element["track"]["name"],
-                "album_image": element["track"]["album"]["images"][0]["url"]
+                "album_image": element["track"]["album"]["images"][0]["url"],
+                "artists":[artirst["name"] for artirst in element["track"]["artists"]]
                 }
                 for element in pList]
     return jsonify({"PlaylistInfo": playListInfo, "songList": songlist, "msg": "playlist obtained successfully"})
