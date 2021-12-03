@@ -49,12 +49,13 @@ def infoPlaylist(id):
     return jsonify({"PlaylistInfo": playListInfo, "songList": songlist, "msg": "playlist obtained successfully"})
 
 
-@app.route("/generatePlaylist/<int:num>/<name>")
-def generatePlaylist(num, name):
+@app.route("/generatePlaylist/<int:num>/<idPlaylist>")
+def generatePlaylist(num, idPlaylist):
     tk = request.headers.get('SpotifyToken')
     if tk is None:
         return jsonify({"msg": "token not found"}), 400
     sp = spotipy.Spotify(auth=tk)
+    name=sp.playlist(idPlaylist)["name"]
     try:
         pList = genPlaylist(sp, num, str(name))
     except:
@@ -71,14 +72,15 @@ def generatePlaylist(num, name):
     return jsonify({"songInfo": songInfo, "ids": save}), 200
 
 
-@app.route("/savePlaylist/<name>", methods=["POST"])
-def savePlaylist(name):
+@app.route("/savePlaylist", methods=["POST"])
+def savePlaylist():
     tk = request.headers.get('SpotifyToken')
     if tk is None:
         return jsonify({"msg": "token not found"}), 400
     sp = spotipy.Spotify(auth=tk)
-    ids = request.get_json()
-    ids = ids["ids"]
+    information = request.get_json()
+    ids = information["ids"]
+    name=information["name"]
     meId = sp.me()["id"]
     playlistInfo = sp.user_playlist_create(
         meId, name, description="Una playlist creada por Magic Playlist")

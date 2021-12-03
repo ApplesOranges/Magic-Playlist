@@ -1,6 +1,4 @@
 import pandas as pd
-from skimage import io
-import matplotlib.pyplot as plt
 from sklearn.metrics.pairwise import cosine_similarity
 
 def generate_playlist_df(playlist_name, playlist_dic, spotify_data, sp):
@@ -19,25 +17,6 @@ def generate_playlist_df(playlist_name, playlist_dic, spotify_data, sp):
     playlist = playlist[playlist['track_id'].isin(spotify_data['track_id'].values)].sort_values('date_added',ascending = False)
 
     return playlist
-
-def visualize_cover_art(playlist_df):
-    temp = playlist_df['url'].values
-    plt.figure(figsize=(15,int(0.625 * len(temp))) , facecolor='#8cfc03')
-    columns = 5
-    
-    for i, url in enumerate(temp):
-        plt.subplot(int(len(temp) / columns + 1), columns, i + 1)
-
-        image = io.imread(url)
-        plt.imshow(image)
-        plt.xticks([])
-        plt.yticks([])
-        s='' 
-        plt.xlabel(s.join(playlist_df['track_name'].values[i].split(' ')[:4]), fontsize = 10, fontweight='bold')
-        plt.tight_layout(h_pad=0.8, w_pad=0)
-        plt.subplots_adjust(wspace=None, hspace=None)
-
-    plt.show()
 
 def generate_playlist_vector(spotify_features, playlist_df, weight_factor):
     
