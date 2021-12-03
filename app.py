@@ -88,6 +88,12 @@ def savePlaylist():
     sp.user_playlist_add_tracks(meId, playlistId, ids)
     return jsonify({"msg": "Playlist created"}), 200
 
+@app.route("/userInfo")
+def userName():
+    tk = request.headers.get('SpotifyToken')
+    sp = spotipy.Spotify(auth=tk)
+    meId = sp.me()
+    return jsonify({"username":meId["display_name"],"image":meId["images"][0]["url"]})
 
 if __name__ == "__main__":
     app.run(port=8080, debug=True)
