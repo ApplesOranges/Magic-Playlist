@@ -11,7 +11,7 @@ def genPlaylist(sp, nTracks,namePlaylist):
     for i in sp.current_user_playlists()['items']:
         playlist_dic[i['name']] = i['uri'].split(':')[2]
     
-    spotify_data = pd.read_csv("SpotifyFeatures.csv")
+    spotify_data = pd.read_csv("https://raw.githubusercontent.com/HuesodeDurazno/Magic-Playlist/main/SpotifyFeatures.csv")
     playlist_df = generate_playlist_df(namePlaylist, playlist_dic, spotify_data, sp)
     spotify_features_df = spotify_data
     genre_OHE = pd.get_dummies(spotify_features_df.genre)

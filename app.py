@@ -66,7 +66,8 @@ def generatePlaylist(num, idPlaylist):
         "url": element["external_urls"]["spotify"],
         "id":element["id"],
         "name": element["name"],
-        "album_image": element["album"]["images"][0]["url"]
+        "album_image": element["album"]["images"][0]["url"],
+        "artists":[artirst["name"] for artirst in element["artists"]]
     }
         for element in pList]
     return jsonify({"songInfo": songInfo, "ids": save}), 200
